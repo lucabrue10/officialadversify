@@ -1,1 +1,416 @@
-PLACEHOLDER_WILL_REPLACE
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Adversify — Something big is in the making.</title>
+  <meta name="description" content="Adversify ist noch nicht offiziell da – aber wenn es kommt, wird es groß. Coming soon." />
+  <meta name="theme-color" content="#050506" />
+  <meta name="color-scheme" content="dark" />
+
+  <meta property="og:title" content="Adversify — Coming Soon" />
+  <meta property="og:description" content="Something big is in the making." />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0c'/%3E%3Cpath d='M32 14 L48 46 L38 46 L32 33 L26 46 L16 46 Z' fill='%23eef1f5'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       Adversify — Coming Soon
+       Cinematic, glossy, dark brand teaser. No frameworks, no build step.
+       ========================================================================== */
+
+    :root {
+      --bg-deep: #050506;
+      --bg-panel: #0b0b0d;
+      --ink: #f3f4f6;
+      --ink-dim: #9a9ea6;
+      --ink-faint: #5c5f66;
+      --light-cool: 210, 225, 255;
+      --light-warm: 255, 214, 170;
+
+      --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+      --dur-slow: 2.4s;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      color-scheme: dark;
+    }
+
+    body {
+      min-height: 100svh;
+      min-height: 100vh;
+      background: var(--bg-deep);
+      color: var(--ink);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+      position: relative;
+      isolation: isolate;
+      cursor: default;
+    }
+
+    /* --------------------------------------------------------------------------
+       Film grain overlay
+       -------------------------------------------------------------------------- */
+
+    .grain {
+      position: fixed;
+      inset: -10%;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 0.035;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* --------------------------------------------------------------------------
+       Backdrop — soft moving light, glossy sheen, vignette
+       -------------------------------------------------------------------------- */
+
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background: radial-gradient(120% 90% at 50% 38%, #101014 0%, var(--bg-deep) 55%, #020203 100%);
+    }
+
+    .glow-layer {
+      position: absolute;
+      inset: 0;
+      will-change: transform;
+    }
+
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      will-change: transform, opacity;
+      filter: blur(10px);
+    }
+
+    .glow--a {
+      width: 60vmax;
+      height: 60vmax;
+      left: 50%;
+      top: 8%;
+      transform: translate(-50%, -30%);
+      background: radial-gradient(circle, rgba(var(--light-cool), 0.14) 0%, rgba(var(--light-cool), 0.05) 35%, transparent 68%);
+      animation: drift-a 34s var(--ease-cinematic) infinite alternate;
+    }
+
+    .glow--b {
+      width: 46vmax;
+      height: 46vmax;
+      left: 12%;
+      top: 62%;
+      background: radial-gradient(circle, rgba(var(--light-warm), 0.07) 0%, rgba(var(--light-warm), 0.03) 40%, transparent 70%);
+      animation: drift-b 42s var(--ease-cinematic) infinite alternate;
+    }
+
+    .glow--c {
+      width: 50vmax;
+      height: 50vmax;
+      right: 8%;
+      top: 55%;
+      background: radial-gradient(circle, rgba(var(--light-cool), 0.08) 0%, rgba(var(--light-cool), 0.03) 40%, transparent 70%);
+      animation: drift-c 38s var(--ease-cinematic) infinite alternate;
+    }
+
+    @keyframes drift-a {
+      0%   { transform: translate(-54%, -32%) scale(1); }
+      100% { transform: translate(-46%, -22%) scale(1.08); }
+    }
+
+    @keyframes drift-b {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(4%, -6%) scale(1.1); }
+    }
+
+    @keyframes drift-c {
+      0%   { transform: translate(0, 0) scale(1.05); }
+      100% { transform: translate(-5%, 5%) scale(0.98); }
+    }
+
+    /* a single, slow diagonal sheen that crosses the stage once in a great while */
+    .sweep {
+      position: absolute;
+      inset: -20% -60%;
+      background: linear-gradient(
+        115deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.025) 49%,
+        rgba(255, 255, 255, 0.045) 50%,
+        rgba(255, 255, 255, 0.025) 51%,
+        transparent 60%
+      );
+      animation: sweep-move 16s ease-in-out infinite;
+    }
+
+    @keyframes sweep-move {
+      0%, 60% { transform: translateX(-30%); }
+      100%    { transform: translateX(30%); }
+    }
+
+    .vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(120% 100% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.55) 100%);
+      box-shadow: inset 0 0 18vmax 4vmax rgba(0, 0, 0, 0.6);
+    }
+
+    /* --------------------------------------------------------------------------
+       Stage / content
+       -------------------------------------------------------------------------- */
+
+    .stage {
+      position: relative;
+      z-index: 2;
+      min-height: 100svh;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8vh 6vw 14vh;
+      gap: clamp(1.5rem, 4vh, 2.75rem);
+    }
+
+    .headline {
+      font-family: "Space Grotesk", "Inter", sans-serif;
+      font-weight: 600;
+      font-size: clamp(2rem, 6.4vw, 5.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      max-width: 18ch;
+      text-wrap: balance;
+    }
+
+    .headline__inner {
+      display: inline-block;
+      background: linear-gradient(
+        100deg,
+        #e7e9ee 0%,
+        #f8f9fb 30%,
+        #ffffff 45%,
+        #aab0bc 52%,
+        #f8f9fb 65%,
+        #e7e9ee 100%
+      );
+      background-size: 260% 100%;
+      background-position: 0% 0%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+
+      filter: blur(14px);
+      opacity: 0;
+      transform: translateY(0.4em);
+
+      animation:
+        reveal-text var(--dur-slow) var(--ease-cinematic) 0.3s forwards,
+        shine 7s ease-in-out 2.4s infinite;
+    }
+
+    @keyframes reveal-text {
+      0% {
+        opacity: 0;
+        filter: blur(14px);
+        transform: translateY(0.4em);
+      }
+      60% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shine {
+      0%   { background-position: 0% 0%; }
+      45%  { background-position: 100% 0%; }
+      100% { background-position: 100% 0%; }
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.65em;
+      opacity: 0;
+      transform: translateY(0.6em);
+      animation: reveal-soft 1.6s var(--ease-cinematic) 1.5s forwards;
+    }
+
+    @keyframes reveal-soft {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .brand__mark {
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 500;
+      font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      padding-left: 0.42em; /* optical balance for the added letter-spacing */
+    }
+
+    .brand__tagline {
+      font-size: clamp(0.85rem, 1.2vw, 1rem);
+      font-weight: 400;
+      color: var(--ink-faint);
+      letter-spacing: 0.01em;
+    }
+
+    /* --------------------------------------------------------------------------
+       Footer
+       -------------------------------------------------------------------------- */
+
+    .footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: clamp(1.25rem, 4vh, 2.5rem);
+      z-index: 2;
+      text-align: center;
+      opacity: 0;
+      animation: reveal-soft 1.6s var(--ease-cinematic) 2.1s forwards;
+    }
+
+    .footer p {
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+      color: var(--ink-faint);
+    }
+
+    /* --------------------------------------------------------------------------
+       Small screens
+       -------------------------------------------------------------------------- */
+
+    @media (max-width: 480px) {
+      .stage {
+        padding: 6vh 7vw 12vh;
+      }
+
+      .brand__mark {
+        letter-spacing: 0.32em;
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       Motion & input preferences
+       -------------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+      .glow,
+      .sweep {
+        animation: none;
+      }
+
+      .headline__inner {
+        animation: reveal-text 0.6s ease-out forwards;
+      }
+
+      .brand,
+      .footer {
+        animation-duration: 0.6s;
+      }
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .glow {
+        transition: transform 0.2s linear;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="backdrop" aria-hidden="true">
+    <div class="glow-layer"><span class="glow glow--a"></span></div>
+    <div class="glow-layer"><span class="glow glow--b"></span></div>
+    <div class="glow-layer"><span class="glow glow--c"></span></div>
+    <span class="sweep"></span>
+    <span class="vignette"></span>
+  </div>
+
+  <main class="stage">
+    <h1 class="headline" data-text="here is coming a big oneee.....">
+      <span class="headline__inner">here is coming a big oneee.....</span>
+    </h1>
+
+    <div class="brand">
+      <p class="brand__mark">Adversify</p>
+      <p class="brand__tagline">Something big is in the making.</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Adversify. All rights reserved.</p>
+  </footer>
+
+  <script>
+    /**
+     * Subtle, cinematic mouse-parallax on the background glow layers.
+     * Disabled for touch devices and when the user prefers reduced motion.
+     */
+    (() => {
+      const glows = Array.from(document.querySelectorAll(".glow-layer"));
+      if (!glows.length) return;
+
+      const canParallax =
+        window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!canParallax) return;
+
+      const depths = [10, 16, 13]; // px of max travel per glow layer
+      const state = glows.map(() => ({ x: 0, y: 0, tx: 0, ty: 0 }));
+
+      let targetX = 0;
+      let targetY = 0;
+
+      window.addEventListener("mousemove", (event) => {
+        targetX = event.clientX / window.innerWidth - 0.5;
+        targetY = event.clientY / window.innerHeight - 0.5;
+      });
+
+      function tick() {
+        glows.forEach((glow, i) => {
+          const s = state[i];
+          s.tx = targetX * depths[i];
+          s.ty = targetY * depths[i];
+
+          // slow easing toward the target for a smooth, weighty feel
+          s.x += (s.tx - s.x) * 0.03;
+          s.y += (s.ty - s.y) * 0.03;
+
+          glow.style.transform = `translate(${s.x.toFixed(2)}px, ${s.y.toFixed(2)}px)`;
+        });
+
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
